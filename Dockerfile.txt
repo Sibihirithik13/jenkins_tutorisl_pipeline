@@ -1,11 +1,11 @@
-# Use an official Python image from Docker Hub
-FROM python:3.9-slim
+FROM ubuntu
 
-# Set the working directory inside the container
-WORKDIR /app
+RUN apt-get update && apt-get install -y tzdata
 
-# Copy all files from current directory to /app
-COPY . .
+RUN apt-get -y install apache2
 
-# Set the command to run the app
-CMD ["python", "app.py"]
+ADD index.html /var/www/html
+
+ENTRYPOINT ["apachectl", "-D", "FOREGROUND"]
+
+ENV name tictacktoe
